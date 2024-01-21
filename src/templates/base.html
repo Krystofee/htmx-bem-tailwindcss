@@ -1,0 +1,149 @@
+{% load django_htmx %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>{% block 'title' %}{% endblock 'title' %}</title>
+
+    <script>
+      {% if debug %}
+          if (typeof window.htmx !== "undefined") {
+              htmx.on("htmx:afterSettle", function(detail) {
+                  if (
+                      typeof window.djdt !== "undefined"
+                      && detail.target instanceof HTMLBodyElement
+                  ) {
+                      djdt.show_toolbar();
+                  }
+              });
+          }
+      {% endif %}
+    </script>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    {% django_htmx_script %}
+
+    <style type="text/tailwindcss">
+
+@layer components {
+  /* Base button styles */
+  .btn {
+    @apply btn-base btn-medium inline-flex items-center font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+  }
+
+  /* Size-specific styles */
+  .btn-tiny {
+    @apply px-2.5 py-1.5 text-xs rounded;
+  }
+
+  .btn-small {
+    @apply px-3 py-2 text-sm rounded;
+  }
+
+  .btn-medium {
+    @apply px-4 py-2 text-base sm:text-sm rounded-md;
+  }
+
+  .btn-large {
+    @apply px-4 py-2 text-base rounded-lg;
+  }
+
+  .btn-huge {
+    @apply px-6 py-3 text-base rounded-lg;
+  }
+
+  /* Color scheme styles */
+  .btn-base {
+    @apply bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm;
+  }
+
+  .btn-primary {
+    @apply text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent shadow-sm;
+  }
+
+  .btn-secondary {
+    @apply border-transparent shadow-none text-indigo-700 bg-indigo-100 hover:bg-indigo-200;
+  }
+
+  .btn-tertiary {
+    @apply border-transparent shadow-none text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50;
+  }
+
+  .btn-negative {
+    @apply text-white bg-red-600 hover:bg-red-700 border border-transparent shadow-sm;
+  }
+
+  .btn-gray-link {
+    @apply p-0 focus:ring-0 hover:bg-transparent border-none shadow-none text-gray-400 hover:text-gray-700 text-sm;
+  }
+
+  .btn-link {
+    @apply p-0 focus:ring-0 hover:bg-transparent border-none shadow-none text-indigo-600 hover:text-indigo-800 text-sm;
+  }
+
+  /* Loading and disabled styles */
+  .btn-loading {
+    @apply cursor-wait;
+  }
+
+  .btn-disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  /* Fluid style */
+  .btn-fluid {
+    @apply w-full justify-center;
+  }
+
+  /* Rounding based on 'attached' prop */
+  .btn-rounded-left {
+    @apply rounded-r-md;
+  }
+
+  .btn-rounded-right {
+    @apply rounded-l-md;
+  }
+
+  .btn-rounded-none {
+    @apply rounded-none;
+  }
+
+  .btn-rounded {
+    @apply rounded-md; /* Default rounding */
+  }
+
+  .modal {
+    @apply flex items-center justify-center fixed z-10 w-full h-full inset-0 overflow-y-auto;
+  }
+
+  .modal-inner {
+    @apply relative bg-white rounded-lg overflow-hidden outline-none focus:outline-none;
+  }
+
+  .overlay {
+    @apply inset-0 fixed bg-gray-900 bg-opacity-30;
+  }
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+    </style>
+  </head>
+
+  <body class="antialiased bg-gray-50" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {% block 'body' %}{% endblock 'body' %}
+  </body>
+</html>

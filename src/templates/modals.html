@@ -1,0 +1,39 @@
+<div class="rounded-lg shadow-xl p-8 bg-white" style="width: 1024px;">
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-4">
+      <div x-data="{ isModalOpen: false }">
+        <button class="btn" id="simple-modal-button" x-on:click="isModalOpen = true">Simple div modal:&nbsp;<span x-text="isModalOpen"></span></button>
+
+        <div class="overlay" x-show="isModalOpen" x-cloak></div>
+
+        <div
+          class="modal"
+          role="dialog"
+          tabindex="-1"
+          x-show="isModalOpen"
+          x-cloak
+          x-transition
+        >
+
+          <div
+            class="modal-inner max-w-lg"
+            x-on:click.away="isModalOpen = false"
+          >
+            <div class="p-5 bg-white">Dialog is opened</div>
+
+            <form class="p-5 bg-gray-50 border-t border-t-gray-200 flex gap-4">
+              <button type="button" class="btn btn-negative" x-on:click="isModalOpen = false">Close</button>
+              <button submit class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {% include "test_modal.html" %}
+
+      <div>
+        <a class="btn btn-link" href="{% url 'store-author-list-create' %}">Authors (modal demo)</a>
+      </div>
+    </div>
+  </div>
+</div>

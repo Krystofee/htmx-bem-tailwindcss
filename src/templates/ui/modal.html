@@ -1,0 +1,25 @@
+<div x-data="{ isModalOpen: false }" x-on:keydown.escape="isModalOpen = false">
+  <div x-on:click="isModalOpen = true">
+    {% block 'trigger' %}{% endblock 'trigger' %}
+  </div>
+
+  <div class="overlay" x-show="isModalOpen" x-cloak></div>
+
+  <div
+    class="modal"
+    role="dialog"
+    tabindex="-1"
+    x-show="isModalOpen"
+
+    x-cloak
+    x-transition
+  >
+
+    <div
+      class="modal-inner max-w-lg"
+      x-on:click.away="isModalOpen = false"
+    >
+      {% block 'content' %}{% endblock 'content' %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+{% extends base_template %}
+
+{% block 'title' %}Authors{% endblock 'title' %}
+
+{% block 'body' %}
+<div
+  id="store-author-list"
+  class="w-full flex flex-col items-center p-12 gap-16"
+>
+  <h1 class="font-bold text-3xl">Authors</h1>
+
+  <div class="flex gap-6">
+    {% url 'store-author-list-create' as hx_post_url %}
+    {% include "ui/form_modal.html" with button_name="Create author (swap)" form=author_form hx_post=hx_post_url hx_target="#store-author-list" %}
+  </div>
+
+  <div class="rounded-lg shadow-xl p-8 bg-white" style="width: 1024px;">
+
+    {% if authors %}
+    <table class="w-full">
+      <tbody>
+        {% for author in authors %}
+          <tr class="border-t" id="author-row-{{ author.id }}">
+            <td class="py-2 px-3">
+              {{ author.name }}
+            </td>
+            <td class="py-2 px-3">
+              {{ author.age }}
+            </td>
+            <td class="py-2 px-3 w-px">
+              <form method="POST" action="{% url 'store-author-delete' id=author.id %}">
+                {% csrf_token %}
+                <button
+                  {% comment %} type="button" {% endcomment %}
+                  class="btn btn-negative"
+                  _="on click set style.display of #author-row-{{ author.id }} to 'none'
+                    on htmx:afterRequest from body set style.display of #author-row-{{ author.id }} to ''"
+                >
+                  Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div>No authors yet :(</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock 'body' %}

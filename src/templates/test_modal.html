@@ -1,0 +1,14 @@
+{% extends "ui/modal.html" %}
+
+{% block 'trigger' %}
+  <button class="btn" id="simple-modal-button">Modal extends base:&nbsp;<span x-text="isModalOpen"></span></button>
+{% endblock 'trigger' %}
+
+{% block 'content' %}
+  <div class="p-5 bg-white">Dialog is opened</div>
+
+  <form class="p-5 bg-gray-50 border-t border-t-gray-200 flex gap-4">
+    <button type="button" class="btn btn-negative" x-on:click="isModalOpen = false">Close</button>
+    <button submit class="btn btn-primary">Submit</button>
+  </form>
+{% endblock 'content' %}

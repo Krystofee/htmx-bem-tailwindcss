@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block 'title' %}Index{% endblock 'title' %}
+
+{% block 'body' %}
+<div class="w-full flex flex-col items-center p-12 gap-16">
+  <h1 class="font-bold text-3xl">Components</h1>
+
+  {% include "buttons.html" %}
+  {% include "modals.html" %}
+
+  </div>
+</div>
+{% endblock 'body' %}

@@ -1,0 +1,20 @@
+{% extends "ui/modal.html" %}
+
+
+{% block 'trigger' %}
+  <button class="btn btn-primary">{{ button_name }}</button>
+{% endblock 'trigger' %}
+
+{% block 'content' %}
+  <div class="bg-white p-5 w-64">
+    <form class="flex flex-col gap-4" hx-post="{{ hx_post }}" hx-target="{{ hx_target }}" hx-swap="outerHTML">
+      {{ form }}
+
+      <div class="flex justify-end">
+        <button type="submit" class="btn btn-primary">
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
+{% endblock 'content' %}
